@@ -4,10 +4,16 @@ package rpn
 
 func scanNum(statement []rune, i *int, rpn []string) []string {
 	iStart := *i
-	for ; *i < len(statement) && (statement[*i] >= '0' && statement[*i] <= '9'); *i++ {
+	if statement[*i] == '-' {
+		*i++
 	}
+	for ; *i < len(statement) && (IsNum(statement[*i]) || IsSep(statement[*i])); *i++ {
+	}
+	//fmt.Print(string(statement[iStart:*i]))
+	//fmt.Println()
+	//fmt.Println(rpn)
 	rpn = append(rpn, string(statement[iStart:*i]))
+	//fmt.Println(rpn)
 	*i--
-	//fmt.Print(string(statement[iStart:i]))
 	return rpn
 }

@@ -1,11 +1,12 @@
 package solution
 
-func pow(base int, pow int) int {
+func pow(base float64, pow float64) float64 {
 	if pow == 0 {
 		return 1
 	}
+	powInt := int(pow)
 	k := base
-	for ; pow > 1; pow-- {
+	for ; powInt > 1; powInt-- {
 		base *= k
 	}
 	return base

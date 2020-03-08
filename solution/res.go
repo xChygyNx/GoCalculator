@@ -5,11 +5,11 @@ import (
 	"strconv"
 )
 
-func Res(rpn []string) (int, error) {
-	nums := make([]int, 10)
+func Res(rpn []string) (float64, error) {
+	nums := make([]float64, 10)
 	var ind int = -1
 	for _, elem := range rpn {
-		if num, err := strconv.Atoi(elem); err == nil {
+		if num, err := strconv.ParseFloat(elem, 64); err == nil {
 			ind++
 			nums[ind] = num
 		} else if ind > 0 {
@@ -26,11 +26,11 @@ func Res(rpn []string) (int, error) {
 					return 0, errors.New("Division by 0")
 				}
 				nums[ind] = nums[ind] / nums[ind+1]
-			case "%":
-				if nums[ind+1] == 0 {
-					return 0, errors.New("Division by 0")
-				}
-				nums[ind] = nums[ind] % nums[ind+1]
+			/*case "%":
+			if nums[ind+1] == 0 {
+				return 0, errors.New("Division by 0")
+			}
+			nums[ind] = nums[ind] % nums[ind+1]*/
 			case "^":
 				nums[ind] = pow(nums[ind], nums[ind+1])
 			}

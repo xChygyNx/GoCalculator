@@ -2,6 +2,7 @@ package main
 
 import (
 	"./check"
+	"./format"
 	"./rpn"
 	"./solution"
 	"bufio"
@@ -24,9 +25,11 @@ func main() {
 	rpn := rpn.Transform(statement)
 	//fmt.Println(rpn)
 	res, err := solution.Res(rpn)
+	acc := format.AccuracyOut(res)
+	//fmt.Println(acc)
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Printf("Result: %d\n", res)
+		fmt.Printf("Result: %.*f\n", acc, res)
 	}
 }
