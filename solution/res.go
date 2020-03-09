@@ -29,7 +29,10 @@ func Res(rpn []string) (float64, error) {
 				}
 				nums[ind] = nums[ind] / nums[ind+1]
 			case "^":
-				nums[ind] = pow(nums[ind], nums[ind+1])
+				nums[ind], err = pow(nums[ind], nums[ind+1])
+				if err != nil {
+					return 0, err
+				}
 			}
 		} else {
 			return 0, errors.New("Incorrect statement")
