@@ -19,7 +19,8 @@ func main() {
 			err := check.Check(statement)
 			if err != nil {
 				fmt.Println(err)
-				return
+				sc.Scan()
+				continue
 			}
 		}
 		rpn := rpn.Transform(statement)
@@ -32,6 +33,7 @@ func main() {
 		} else {
 			fmt.Printf("Result: %.*f\n", acc, res)
 		}
+		fmt.Println("Input statement")
 		sc.Scan()
 	}
 }
