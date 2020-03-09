@@ -1,6 +1,7 @@
 package rpn
 
-//import "fmt"
+/* Функция для преобразования поступившего выражения
+в обратную польскую нотацию*/
 
 func Transform(statement string) []string {
 	rpn := make([]string, 0, 50)
@@ -11,7 +12,6 @@ func Transform(statement string) []string {
 			rpn = scanNum(stat, &i, rpn)
 		} else if stat[i] == '-' {
 			if IsNegative(stat, i) {
-				//fmt.Println("Detect Negative num")
 				rpn = scanNum(stat, &i, rpn)
 			} else {
 				rpn, ops = scanOp(stat[i], rpn, ops)
@@ -25,6 +25,5 @@ func Transform(statement string) []string {
 		}
 	}
 	rpn = completeRpn(rpn, ops)
-	//fmt.Println(rpn)
 	return rpn
 }

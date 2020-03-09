@@ -1,5 +1,9 @@
 package check
 
+/*Выполняет проверку на корректную растановку скобок
+1) что у каждой открывающей скобки есть закрывающая
+2) что закрывающей скобке предшествует открывающая*/
+
 func checkParentheses(statement string) bool {
 	var res int
 	stat := []rune(statement)

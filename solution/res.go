@@ -1,5 +1,7 @@
 package solution
 
+// Собственно сам подсчет результата
+
 import (
 	"errors"
 	"strconv"
@@ -26,11 +28,6 @@ func Res(rpn []string) (float64, error) {
 					return 0, errors.New("Division by 0")
 				}
 				nums[ind] = nums[ind] / nums[ind+1]
-			/*case "%":
-			if nums[ind+1] == 0 {
-				return 0, errors.New("Division by 0")
-			}
-			nums[ind] = nums[ind] % nums[ind+1]*/
 			case "^":
 				nums[ind] = pow(nums[ind], nums[ind+1])
 			}

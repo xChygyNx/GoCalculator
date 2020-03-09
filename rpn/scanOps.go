@@ -1,6 +1,7 @@
 package rpn
 
-//import "fmt"
+/* Считывание математических операций и их расстановка
+в корректном порядке*/
 
 var OpPrior = map[rune]int8{
 	'+': 4,
@@ -14,20 +15,16 @@ var OpPrior = map[rune]int8{
 
 func scanOp(r rune, rpn []string, ops []rune) ([]string, []rune) {
 	lenOps := len(ops)
-	//fmt.Printf("lenops = %d\n", lenOps)
 	if lenOps == 0 || OpPrior[r] < OpPrior[ops[lenOps-1]] {
 		ops = append(ops, r)
 	} else {
-		//fmt.Printf("%c\n", ops[lenOps-1])
 		i := 0
 		for ; i < lenOps && OpPrior[r] >= OpPrior[ops[lenOps-i-1]]; i++ {
 			rpn = append(rpn, string(ops[lenOps-i-1]))
 		}
 		ops[lenOps-i] = r
 		ops = ops[:lenOps-i+1]
-		//fmt.Printf("i = %d\n", i)
 	}
-	//myPrint(ops)
 	return rpn, ops
 }
 

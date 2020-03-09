@@ -1,8 +1,8 @@
 package format
 
-import (
-	"strconv"
-)
+// Функция для подсчета необходимой точности вывода в консоль
+
+import "strconv"
 
 func AccuracyOut(num float64) int {
 	numInt := int(num)

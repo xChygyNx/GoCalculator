@@ -1,5 +1,8 @@
 package rpn
 
+/* пропуск пробельных символов
+нужна для корректного определения отрицательных чисел*/
+
 func skipSpaces(str []rune, ind int) int {
 	if ind != 0 {
 		ind--

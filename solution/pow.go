@@ -1,5 +1,7 @@
 package solution
 
+// Функция возведения в степень
+
 func pow(base float64, pow float64) float64 {
 	powInt := int(pow)
 	if powInt == 0 {

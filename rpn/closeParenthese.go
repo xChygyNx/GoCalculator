@@ -1,5 +1,8 @@
 package rpn
 
+/* Функция для формирования обратной польской нотации когда
+в выражении встретилась закрыбающая скобка */
+
 func closeParenthese(rpn []string, ops []rune) ([]string, []rune) {
 	lenOps := len(ops)
 	var i int = 1
