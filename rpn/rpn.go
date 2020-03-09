@@ -33,21 +33,6 @@ func Transform(statement string) []string {
 		case stat[i] == ')':
 			rpn, ops = closeParenthese(rpn, ops)
 		}
-		/*if IsNum(stat[i]) || IsSep(stat[i]) {
-			rpn = scanNum(stat, &i, rpn)
-		} else if stat[i] == '-' {
-			if IsNegative(stat, i) {
-				rpn = scanNum(stat, &i, rpn)
-			} else {
-				rpn, ops = scanOp(stat[i], rpn, ops)
-			}
-		} else if IsOp(stat[i]) {
-			rpn, ops = scanOp(stat[i], rpn, ops)
-		} else if stat[i] == '(' {
-			ops = append(ops, stat[i])
-		} else if stat[i] == ')' {
-			rpn, ops = closeParenthese(rpn, ops)
-		}*/
 	}
 	rpn = completeRpn(rpn, ops)
 	return rpn
@@ -86,7 +71,7 @@ func scanOp(r rune, rpn []string, ops []rune) ([]string, []rune) {
 	return rpn, ops
 }
 
-/* пропуск пробельных символов
+/* функция пропуска пробельных символов,
 нужна для корректного определения отрицательных чисел*/
 
 func skipSpaces(str []rune, ind int) int {
