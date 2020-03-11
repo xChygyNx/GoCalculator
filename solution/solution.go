@@ -26,7 +26,7 @@ func Run() {
 			}
 		}
 		rpn := rpn.Transform(statement)
-		fmt.Println(rpn)
+		//fmt.Println(rpn)
 		res, err := Res(rpn)
 		acc := format.AccuracyOut(res)
 		if err != nil {

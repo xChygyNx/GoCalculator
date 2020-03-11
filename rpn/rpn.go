@@ -31,7 +31,7 @@ func Transform(statement string) []string {
 		case stat[i] == '(':
 			ops = append(ops, stat[i])
 		case stat[i] == ')':
-			rpn, ops = closeParenthese(rpn, ops)
+			rpn, ops = CloseParenthese(rpn, ops)
 		}
 	}
 	rpn = completeRpn(rpn, ops)
@@ -90,7 +90,7 @@ func skipSpaces(str []rune, ind int) int {
 /* Функция для формирования обратной польской нотации когда
 в выражении встретилась закрыбающая скобка */
 
-func closeParenthese(rpn []string, ops []rune) ([]string, []rune) {
+func CloseParenthese(rpn []string, ops []rune) ([]string, []rune) {
 	lenOps := len(ops)
 	var i int = 1
 	for ; ops[lenOps-i] != '('; i++ {

@@ -38,9 +38,9 @@ func TestTransform(t *testing.T) {
 	}
 }
 
-func TestcloseParenthese(t *testing.T) {
+func TestCloseParenthese(t *testing.T) {
 	for _, elem := range testsCloseParenthese {
-		gotRpn, gotOps := closeParenthese(elem.rpnStart, elem.opsStart)
+		gotRpn, gotOps := CloseParenthese(elem.rpnStart, elem.opsStart)
 		if !eqSliceStr(gotRpn, elem.rpnFinish) || !eqSliceRune(gotOps, elem.opsFinish) {
 			t.Error(
 				"For", elem.rpnStart, "&", elem.opsStart,
