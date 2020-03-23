@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./grep"
+	"../grep"
 )
 
 func main() {
