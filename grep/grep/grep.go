@@ -131,6 +131,7 @@ func fileNames(flags map[string]bool, pattern string, fileContent map[string][]s
 func strMatch(flags map[string]bool, pattern string, fileContent map[string][]string, multiFile bool) []string {
 	var addStr bool
 	var sourceStr string
+
 	res := make([]string, 0)
 	if flags["-i"] {
 		pattern = strings.ToLower(pattern)
@@ -244,8 +245,6 @@ func Usage() {
 	fmt.Println()
 	fmt.Println("Pattern")
 	fmt.Printf("\t String which you need to find\n")
-	fmt.Printf("\t If need find string which has prefix \"-\", need to input one with quotation marks\n")
-	fmt.Printf("\t and back slash (for examle \"-x\"\n")
 	fmt.Println()
 	fmt.Println("Files:")
 	fmt.Printf("\t List of files where need to find pattern\n")
