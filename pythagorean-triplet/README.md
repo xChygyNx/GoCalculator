@@ -1,53 +1,32 @@
-# Pythagorean Triplet
+# Pythagorean Triplet  
 
-A Pythagorean triplet is a set of three natural numbers, {a, b, c}, for
-which,
+Программа для поиска прямоугольных треугольников по заданным параметрам.  
 
-```text
-a**2 + b**2 = c**2
-```
+### Usage
+Исполняемый файл находится в папке cmd запустить его можно командой go run pythagorean.go из папки cmd, или командой go run ./cmd/pythagorean.go из корневой папки.
 
-and such that,
+### Sum  
+В данном режиме находятся все прямоугольные треугольники, имеющие заданный периметр. Команда запуска данного режима такая  
+###### go run pythagorean.go -s 'perimetr'  
+где -s - флаг режима  
+'perimetr' - заданный периметр  
 
-```text
-a < b < c
-```
+### Range  
+В данном режиме находятся все прямоугольные треугольники, имеющие стороны, длиной в заданном диапвзоне  
+###### go run pythagorean.go -s 'min' 'max'  
+где -r - флаг режима  
+'min' - нижняя граница диапазона  
+'max' - верхняя граница диапазона
 
-For example,
+Программа перед стартом проводит валидацию команды  
+1) проверка на корректность режима (выбран или "-s", или "-r)  
+2) проверка на правильное количество аргументов для обоих режимов  
+3) проверка, что для числовых значений заданы числа  
+4) проверка, что числа из положительного диапазона int (0 < x < 2147483647)  
+если какая то проверка не прошла, выведется инструкция и информация об допущенной ошибке.  
+Если валидация прошла, будет выведен список треугольников, отвечающих заданным требованиям.  
 
-```text
-3**2 + 4**2 = 9 + 16 = 25 = 5**2.
-```
-
-Given an input integer N, find all Pythagorean triplets for which `a + b + c = N`.
-
-For example, with N = 1000, there is exactly one Pythagorean triplet for which `a + b + c = 1000`: `{200, 375, 425}`.
-
-## Coding the solution
-
-Look for a stub file having the name pythagorean_triplet.go
-and place your solution code in that file.
-
-## Running the tests
-
-To run the tests run the command `go test` from within the exercise directory.
-
-If the test suite contains benchmarks, you can run these with the `--bench` and `--benchmem`
-flags:
-
-    go test -v --bench . --benchmem
-
-Keep in mind that each reviewer will run benchmarks on a different machine, with
-different specs, so the results from these benchmark tests may vary.
-
-## Further information
-
-For more detailed information about the Go track, including how to get help if
-you're having trouble, please visit the exercism.io [Go language page](http://exercism.io/languages/go/resources).
-
-## Source
-
-Problem 9 at Project Euler [http://projecteuler.net/problem=9](http://projecteuler.net/problem=9)
-
-## Submitting Incomplete Solutions
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+### Benchmark  
+Программа для поиска треугольников использует грубый перебор, по этой причине для данной задачи важным параметром является быстродействие. В папке pythagorean есть тесты на производительность. Запускаются они командой (из апки pythagorean)  
+###### go test -v --bench . --benchmem
+будет выведена информация о быстродействии функций Sum и Range (используемые в текущей программе) и Sum2 и Range2 (первые написанные мной версии вышеобозначенных функций, в программе на данный момент не используются)  
