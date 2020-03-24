@@ -1,109 +1,23 @@
-# Grep
+# Grep  
+Программа эмулирует функционал стандартной Unix команды grep (выводит строку в которой найдено совпадение с заданным шаблоном)  
 
-Search a file for lines matching a regular expression pattern. Return the line
-number and contents of each matching line.
-
-The Unix [`grep`](http://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html) command can be used to search for lines in one or more files
-that match a user-provided search query (known as the *pattern*).
-
-The `grep` command takes three arguments:
-
-1. The pattern used to match lines in a file.
-2. Zero or more flags to customize the matching behavior.
-3. One or more files in which to search for matching lines.
-
-Your task is to implement the `grep` function, which should read the contents
-of the specified files, find the lines that match the specified pattern
-and then output those lines as a single string. Note that the lines should
-be output in the order in which they were found, with the first matching line
-in the first file being output first.
-
-As an example, suppose there is a file named "input.txt" with the following contents:
-
-```text
-hello
-world
-hello again
-```
-
-If we were to call `grep "hello" input.txt`, the returned string should be:
-
-```text
-hello
-hello again
-```
-
-### Flags
-
-As said earlier, the `grep` command should also support the following flags:
-
-- `-n` Print the line numbers of each matching line.
-- `-l` Print only the names of files that contain at least one matching line.
-- `-i` Match line using a case-insensitive comparison.
-- `-v` Invert the program -- collect all lines that fail to match the pattern.
-- `-x` Only match entire lines, instead of lines that contain a match.
-
-If we run `grep -n "hello" input.txt`, the `-n` flag will require the matching
-lines to be prefixed with its line number:
-
-```text
-1:hello
-3:hello again
-```
-
-And if we run `grep -i "HELLO" input.txt`, we'll do a case-insensitive match,
-and the output will be:
-
-```text
-hello
-hello again
-```
-
-The `grep` command should support multiple flags at once.
-
-For example, running `grep -l -v "hello" file1.txt file2.txt` should
-print the names of files that do not contain the string "hello".
-
-## Implementation
-
-In package grep, Define a single Go func, Search, which accepts a pattern string,
-a slice of flags which are strings, and a slice of filename strings.
-Search should return a slice of strings of the output for
-the given flags and filenames.
-
-Use the following signature for func Search:
-
-```
-func Search(pattern string, flags, files []string) []string {
-```
-
-
-
-## Coding the solution
-
-Look for a stub file having the name grep.go
-and place your solution code in that file.
-
-## Running the tests
-
-To run the tests run the command `go test` from within the exercise directory.
-
-If the test suite contains benchmarks, you can run these with the `--bench` and `--benchmem`
-flags:
-
-    go test -v --bench . --benchmem
-
-Keep in mind that each reviewer will run benchmarks on a different machine, with
-different specs, so the results from these benchmark tests may vary.
-
-## Further information
-
-For more detailed information about the Go track, including how to get help if
-you're having trouble, please visit the exercism.io [Go language page](http://exercism.io/languages/go/resources).
-
-## Source
-
-Conversation with Nate Foster. [http://www.cs.cornell.edu/Courses/cs3110/2014sp/hw/0/ps0.pdf](http://www.cs.cornell.edu/Courses/cs3110/2014sp/hw/0/ps0.pdf)
-
-## Submitting Incomplete Solutions
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+### Usage  
+Исполняемый файл находится в папке cmd запустить его можно командой go run grep.go из папки cmd, или командой go run ./cmd/grep.go из корневой папки. Схема команды следующая  (приведенная схема работает для папки cmd)  
+#### go run grep.go [-flags] -pattern -files...  
+где 
+###### flags  
+Опции работы программы, доступны следующие флаги:  
+[-n] - выводит перед строкой ее номер в файле (не работает с флагом [-l]  
+[-l] - выводит название файлов, в которых найдено совпадение с шаблоном  
+[-i] - совпадение ищется без учета регистра  
+[-v] - инверсия функции, т.е. выводятся строки, где НЕ найдено совпадение с шаблоном (с флагом [-l] выводятся файлы, где есть хотя бы одна строка, в котором нет совпадения с шаблоном)  
+[-x] - выводятся строки только полностью совпадают с шаблоном  
+Возможно задание сразу нескольких флагов, в этом случае их необходимо вводить последовательно, порядок не важен (к примеру флаги [-xin], [-ixn], [-nxi] и т.д. - способы совместного использования флагов [-x], [-i] и [-n])  
+В случае ввода невалидного флага, программа выдаст предупреждение и инструкцию по вводу   
+###### pattern  
+Шаблон поиска. Может состоять из одного слова, или из целой фразы (в этом случае фраза пишется в кавычках "").
+Замечание: на данный момент не работает с шаблонами, начинающимися на "-" если не заданы флаги (программа воспринимает шаблон как задание флагов), в Будущем будет исправлено.  
+###### files
+Список файлов в которых производится поиск, можно задавать несколько. Парочка тестовых текстовых файлов находятся в папке texts. Необходимо Задавать относительный путь до файла из той папки, в которой производится запуск программы, т.е. при запуске программы из папки cmd путь до тестовых файлов будет выглядеть следующим образом: ../texts/'название файла'  
+В случае ошибки открытия или чтения файла программа сообщит, с каким файлом возникли сложности и продолжит работу с оставшимися файлами, поиск в проблемном файле осуществляться не будет.  
+P.S. На данный момент программа работает только с латиницей, планируется расширение на кириллицу.
