@@ -1,7 +1,7 @@
 package check
 
 import (
-	. "../rpn"
+	. "github.com/yura/calculator/rpn"
 	"errors"
 )
 

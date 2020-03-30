@@ -1,41 +1,89 @@
 package solution
 
 import (
-	"../check"
-	"../format"
-	"../rpn"
 	"bufio"
 	"errors"
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
+func main() {
+	scanner := bufio.NewScanner(os.Stdin)
+	calc, err := Create(DefaultConfig, scanner)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	calc.Run()
+}
+
+// мы ожидаем ввод примера                       - io
+// валидируем переданные пользователем параметры - validate
+// выполняем вычисления                          - calculate
+// отображаем результат                          - print
+
+type Calculator struct {
+	Config  Config
+	Scanner *bufio.Scanner
+	Input   string
+	Output  string
+}
+
+func Create(c Config, s *bufio.Scanner) (*Calculator, error) {
+	return &Calculator{
+		Config:  c,
+		Scanner: s,
+	}, nil
+}
+
+// implement check.Check(statement) here
+func (calc *Calculator) Validate(input string) error { return nil }
+
 // Основная функция, отвечающая за запуск остальных функций и вывод в консоль
-func Run() {
-	fmt.Println("Input statement")
-	sc := bufio.NewScanner(os.Stdin)
-	sc.Scan()
-	for statement := sc.Text(); statement != "exit"; statement = sc.Text() {
-		if sc.Err() == nil {
-			err := check.Check(statement)
-			if err != nil {
-				fmt.Println(err)
-				sc.Scan()
-				continue
-			}
+func (calc *Calculator) Run() {
+	for {
+		fmt.Print("-> ")
+		text, _ := reader.ReadString('\n')
+		// convert CRLF to LF
+		text = strings.Replace(text, "\n", "", -1)
+
+		if strings.Compare("exit", text) == 0 {
+			break
 		}
-		rpn := rpn.Transform(statement)
-		//fmt.Println(rpn)
-		res, err := Res(rpn)
-		acc := format.AccuracyOut(res)
+
+	}
+
+	for statement := calc.Scanner.Text(); statement != "exit"; statement = calc.Scanner.Text() {
+		if calc.Scanner.Err() != nil {
+			fmt.Println(errors.New("scanner error"))
+			continue
+		}
+
+		err := calc.Validate(statement)
 		if err != nil {
-			fmt.Println(err)
-		} else {
-			fmt.Printf("Result: %.*f\n", acc, res)
+			fmt.Println("failed to ")
+			continue
 		}
-		fmt.Println("Input statement")
-		sc.Scan()
+
+		rpn, err := calc.ConvertToRPN(statement) // ex Transform
+		if err != nil {
+			fmt.Println("failed to convert statement to rpn")
+			continue
+		}
+
+		res, err := calc.Calculate(rpn)
+		if err != nil {
+			fmt.Println("failed to calculate")
+			continue
+		}
+
+		err := calc.PrintWithAccuracy(res)
+		if err != nil {
+			fmt.Println("failed to print with given accuracy")
+			continue
+		}
 	}
 }
 

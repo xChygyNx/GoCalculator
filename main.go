@@ -1,9 +1,10 @@
 package main
 
 import (
-	"../solution"
+	"fmt"
+	
 )
 
 func main() {
-	solution.Run()
+	fmt.Printf("Hello, world\n")
 }
