@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/yura/calculator/check"
-	"github.com/yura/calculator/format"
 	"github.com/yura/calculator/rpn"
 	"os"
 	"strconv"
@@ -72,7 +71,6 @@ func (calc *Calculator) Run() {
 			break
 		}
 		calc.Input = strings.Replace(statement, "\n", "", -1)
-		//fmt.Println(calc.Input)
 		err := calc.Validate()
 		if err != nil {
 			fmt.Println(err)
@@ -93,13 +91,8 @@ func (calc *Calculator) Run() {
 			fmt.Print("-> ")
 			continue
 		}
-
-		acc := format.AccuracyOut(calc.Res)
-		if err != nil {
-			fmt.Println("failed to print with given accuracy")
-			continue
-		}
-		fmt.Printf("Result: %.*f\n", acc, calc.Res)
+		fmt.Printf("Result: %s\n", strconv.FormatFloat(calc.Res, 'f', -1, 64))
+		//fmt.Printf("num: %s\n", strconv.FormatFloat(4.3, 'f', -1, 64))
 		fmt.Print("-> ")
 	}
 }
@@ -139,7 +132,7 @@ func (calc *Calculator) RefreshStructure() {
 	calc.rpn = make([]string, 0, 20)
 }
 
-// Функция подсчета результата из полученного выражения, записанного
+// Метод подсчета результата из полученного выражения, записанного
 // при помощи обратной польской нотации
 func (calc *Calculator) Calculate() error {
 	nums := make([]float64, 10)
