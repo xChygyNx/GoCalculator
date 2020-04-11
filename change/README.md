@@ -1,46 +1,27 @@
 # Change
 
-Correctly determine the fewest number of coins to be given to a customer such
-that the sum of the coins' value would equal the correct amount of change.
+Классическая задача динамического программирования, в которой необходимо посчитать наименьшее возможное количество монет заданного номинала которой можно набрать необходимую сумму. Программа не только считает наименьшее количество монет, но и выводит номиналы этих монет.  
 
-## For example
+### Usage  
+Исполняемый файл находится в папке cmd, запустить его можно командой go run change.go из папки cmd, или командой go run ./cmd/change.go из корневой папки. Схема команды следующая (приведенная схема работает для папки cmd):  
+###### go run change.go "coins_nominals" target  
+coins_nominals - список номиналов монет, целые положительные числа  
+target         - сумма, которую необходимо набрать монетами заданных номиналов  
+если какое до условие не выполняется, программа выведет инструкцию и допущенную ошибку  
+Список номиналов монет можно задавать в произвольном порядке  
+При корректном вводе программа начнет подбор монет. Может сложится ситуация, когда монетами заданного номинала нельзя набрать необходимую сумму. В этом случае программа сообщит об этом. В случае если сумму заданными монетами набрать возможно, будет выведен наименьший набор монет, которыми можно набрать заданную сумму.  
 
-- An input of 15 with [1, 5, 10, 25, 100] should return one nickel (5)
-  and one dime (10) or [5, 10]
-- An input of 40 with [1, 5, 10, 25, 100] should return one nickel (5)
-  and one dime (10) and one quarter (25) or [5, 10, 25]
+### Алгоритм  
+Создается массив чисел который будет показывать минимальное количество монет необходимых для набора заданной суммы, и одновременно отображение, ключами которого является сумма, а значениями - список монет, которыми данную сумму можно набрать.  
+Первому элементу массива даем значение 0 (логично, что сумму равную 0 можно набрать 0 монетами), дальше запускается внешний цикл по увеличению суммы от 1 до необходимой суммы и внутренний цикл по перебору монет всех доступных номиналов. Дальше начинает заполняться массив количества монет. Происходит это следующим образом:  
+1) из текущей суммы отнимается номинал текущей монеты  
+2) если полученную сумму можно набрать данными монетами (1 результат который запустит цепочку расчета уже есть - 0 можно набрать 0 монет), то берется число монет неоюходимую для набора этой суммы и увеличивается на 1 (пример, если надо набрать 7 и мы сейчас проверяем монету достоинством 2, то мы проверяем, можно ли заданными монетами набрать 7-2=5, если можно, то 7 можно набрать 3 монетами (монетами, необходимыми для набора 5 + монета достоинством 2))
+3) сверяем, что полученное количество монет меньше, чем уже записанное в данную ячейку (возможно данную сумму можно набрать несколькими разными способами, нам нужен наименьший по количеству монет). Если это так, мы вписываем новую сумму в массив. Так же для данной суммы вписываем в отображение список монет, коиорая нужна для набора "текущая сумма - номинал текущей монеты" и добавляем к ней текущую монету.  
+4) так доходим до требуемой суммы.  
+После прохода цикла необходимый набор монет будет записан в отображении по ключу равной заданной сумме
 
-## Edge cases
-
-- Does your algorithm work for any given set of coins?
-- Can you ask for negative change?
-- Can you ask for a change value smaller than the smallest coin value?
-
-## Coding the solution
-
-Look for a stub file having the name change.go
-and place your solution code in that file.
-
-## Running the tests
-
-To run the tests run the command `go test` from within the exercise directory.
-
-If the test suite contains benchmarks, you can run these with the `--bench` and `--benchmem`
-flags:
-
-    go test -v --bench . --benchmem
-
-Keep in mind that each reviewer will run benchmarks on a different machine, with
-different specs, so the results from these benchmark tests may vary.
-
-## Further information
-
-For more detailed information about the Go track, including how to get help if
-you're having trouble, please visit the exercism.io [Go language page](http://exercism.io/languages/go/resources).
-
-## Source
-
-Software Craftsmanship - Coin Change Kata [https://web.archive.org/web/20130115115225/http://craftsmanship.sv.cmu.edu:80/exercises/coin-change-kata](https://web.archive.org/web/20130115115225/http://craftsmanship.sv.cmu.edu:80/exercises/coin-change-kata)
-
-## Submitting Incomplete Solutions
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+### Tests & Benchmarks  
+В папке change есть тесты и бенчмарки. Запускаются стандартно:  
+###### go test
+и  
+###### go test -v --bench .
